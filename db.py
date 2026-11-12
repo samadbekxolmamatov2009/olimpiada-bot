@@ -8,11 +8,23 @@ from config import TURSO_AUTH_TOKEN, TURSO_DATABASE_URL
 _client: Optional[libsql_client.Client] = None
 
 
+def _http_url(url: str) -> str:
+    """libsql:// (WebSocket) manzilni https:// (HTTP) manzilga aylantiradi.
+
+    Ba'zi hosting muhitlarida (masalan Render) WebSocket handshake
+    Turso tomonidan 400 xato bilan rad etilishi mumkin; https:// sxemasi
+    xuddi shu bazaga HTTP orqali ulanadi va bu muammoni chetlab o'tadi.
+    """
+    if url.startswith("libsql://"):
+        return "https://" + url[len("libsql://") :]
+    return url
+
+
 def get_client() -> libsql_client.Client:
     global _client
     if _client is None:
         _client = libsql_client.create_client(
-            url=TURSO_DATABASE_URL, auth_token=TURSO_AUTH_TOKEN
+            url=_http_url(TURSO_DATABASE_URL), auth_token=TURSO_AUTH_TOKEN
         )
     return _client
 
