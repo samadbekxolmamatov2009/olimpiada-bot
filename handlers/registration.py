@@ -30,7 +30,7 @@ WRONG_GRADE_TEXT = (
 
 @router.message(CommandStart(), ~F.from_user.id.in_(ADMIN_IDS))
 async def cmd_start(message: Message, state: FSMContext) -> None:
-    if is_registered(message.from_user.id):
+    if await is_registered(message.from_user.id):
         await message.answer(ALREADY_REGISTERED_TEXT)
         return
     if datetime.now() > REGISTRATION_DEADLINE:
@@ -101,13 +101,13 @@ async def reg_parent_phone(message: Message, state: FSMContext) -> None:
         await message.answer("Iltimos, telefon raqamini to'g'ri kiriting (masalan: +998901234567):")
         return
 
-    if is_registered(message.from_user.id):
+    if await is_registered(message.from_user.id):
         await state.clear()
         await message.answer(ALREADY_REGISTERED_TEXT)
         return
 
     data = await state.get_data()
-    add_registration(
+    await add_registration(
         telegram_id=message.from_user.id,
         full_name=data["full_name"],
         district=data["district"],
@@ -124,7 +124,7 @@ async def reg_parent_phone(message: Message, state: FSMContext) -> None:
 
 @router.message(~F.from_user.id.in_(ADMIN_IDS))
 async def catch_all(message: Message, state: FSMContext) -> None:
-    if is_registered(message.from_user.id):
+    if await is_registered(message.from_user.id):
         await message.answer(ALREADY_REGISTERED_TEXT)
         return
     if await state.get_state() is None:

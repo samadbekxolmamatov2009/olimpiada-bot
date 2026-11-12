@@ -35,6 +35,10 @@ cp .env.example .env
 - `BOT_TOKEN` — @BotFather dan olingan token.
 - `ADMIN_IDS` — admin(lar)ning Telegram foydalanuvchi ID raqamlari, vergul bilan ajratilgan
   (masalan: `123456789,987654321`). O'z ID raqamingizni bilish uchun @userinfobot ga yozing.
+- `TURSO_DATABASE_URL` va `TURSO_AUTH_TOKEN` — ma'lumotlar Turso (libSQL) bazasida saqlanadi.
+  [turso.tech](https://turso.tech) da yangi baza yarating (`turso db create olimpiada-bot`) va
+  `turso db show --url olimpiada-bot` / `turso db tokens create olimpiada-bot` orqali ularni oling.
+  Bu — frontend/backend ishlatayotgan Turso bazasidan alohida, faqat shu bot uchun baza.
 
 ## Ishga tushirish
 
@@ -42,4 +46,4 @@ cp .env.example .env
 python bot.py
 ```
 
-Ma'lumotlar `olimpiada.db` (SQLite) faylida saqlanadi.
+Ma'lumotlar Turso (libSQL) bazasida saqlanadi.

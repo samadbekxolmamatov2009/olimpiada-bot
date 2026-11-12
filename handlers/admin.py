@@ -29,7 +29,7 @@ async def admin_panel(message: Message) -> None:
 
 @router.callback_query(F.data == "admin_export", F.from_user.id.in_(ADMIN_IDS))
 async def admin_export(callback: CallbackQuery) -> None:
-    rows = get_all_registrations()
+    rows = await get_all_registrations()
     if not rows:
         await callback.message.answer("Hali hech kim ro'yxatdan o'tmagan.")
         await callback.answer()
@@ -56,7 +56,7 @@ async def admin_export(callback: CallbackQuery) -> None:
     filename = f"navoiy_qorakul_olimpiada_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx"
     await callback.message.answer_document(
         BufferedInputFile(buf.read(), filename=filename),
-        caption=f"Jami: {count_registrations()} ta ro'yxatdan o'tgan.",
+        caption=f"Jami: {await count_registrations()} ta ro'yxatdan o'tgan.",
     )
     await callback.answer()
 
@@ -133,7 +133,7 @@ async def areg_parent_phone(message: Message, state: FSMContext) -> None:
         return
 
     data = await state.get_data()
-    add_registration(
+    await add_registration(
         telegram_id=None,
         full_name=data["full_name"],
         district=data["district"],
