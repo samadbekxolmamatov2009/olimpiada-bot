@@ -10,7 +10,7 @@ Ro'yxatdan o'tish **Telegram Mini App** (Web App) ichida, zamonaviy forma ko'rin
    Obuna bo'lmasa, "📢 Kanalga o'tish" va "✅ Men obuna bo'ldim" tugmalari ko'rsatiladi;
    obuna bo'lib, tugmani bosgandan keyingina davom etadi.
 3. Bot "📝 Ro'yxatdan o'tish" tugmasini yuboradi — bosilganda Telegram ichida Mini App ochiladi.
-4. Mini App formasida: **Ism familya → Tumani → Maktabi → Sinfi (3/4) → Ota-ona tel raqami**
+4. Mini App formasida: **Ism familya → Tug'ilgan sana → Tumani → Maktabi → Sinfi (3/4) → Ota-ona tel raqami**
    to'ldiriladi va "Ro'yxatdan o'tish" bosiladi. Telefon maydoniga `+998 ` avtomatik yozilgan
    holda ochiladi — foydalanuvchi faqat qolgan raqamlarni kiritadi.
 5. Mini App Telegramning `initData`sini backendga yuboradi, backend uni (bot token bilan HMAC

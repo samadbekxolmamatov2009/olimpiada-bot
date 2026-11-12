@@ -17,6 +17,7 @@
     form: document.getElementById("form"),
     adminNote: document.getElementById("adminNote"),
     fullName: document.getElementById("fullName"),
+    birthDate: document.getElementById("birthDate"),
     district: document.getElementById("district"),
     school: document.getElementById("school"),
     parentPhone: document.getElementById("parentPhone"),
@@ -45,6 +46,7 @@
   function validate() {
     const ok =
       els.fullName.value.trim().length >= 3 &&
+      els.birthDate.value.trim().length > 0 &&
       els.district.value.trim().length > 0 &&
       els.school.value.trim().length > 0 &&
       selectedGrade !== null &&
@@ -62,7 +64,9 @@
     });
   });
 
-  [els.fullName, els.district, els.school, els.parentPhone].forEach((input) => {
+  els.birthDate.max = new Date().toISOString().slice(0, 10);
+
+  [els.fullName, els.birthDate, els.district, els.school, els.parentPhone].forEach((input) => {
     input.addEventListener("input", validate);
   });
 
@@ -112,6 +116,7 @@
         body: JSON.stringify({
           init_data: initData,
           full_name: els.fullName.value.trim(),
+          birth_date: els.birthDate.value.trim(),
           district: els.district.value.trim(),
           school: els.school.value.trim(),
           grade: selectedGrade,

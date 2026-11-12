@@ -38,13 +38,40 @@ async def admin_export(callback: CallbackQuery) -> None:
     ws = wb.active
     ws.title = "Ro'yxat"
     ws.append(
-        ["№", "Ism Familya", "Tumani", "Maktabi", "Sinfi", "Ota-ona tel raqami", "Admin kiritgan", "Sana"]
+        [
+            "№",
+            "Ism Familya",
+            "Tug'ilgan sana",
+            "Tumani",
+            "Maktabi",
+            "Sinfi",
+            "Ota-ona tel raqami",
+            "Admin kiritgan",
+            "Sana",
+        ]
     )
-    for idx, (full_name, district, school, grade, parent_phone, by_admin, created_at) in enumerate(
-        rows, start=1
-    ):
+    for idx, (
+        full_name,
+        birth_date,
+        district,
+        school,
+        grade,
+        parent_phone,
+        by_admin,
+        created_at,
+    ) in enumerate(rows, start=1):
         ws.append(
-            [idx, full_name, district, school, grade, parent_phone, "Ha" if by_admin else "Yo'q", created_at]
+            [
+                idx,
+                full_name,
+                birth_date,
+                district,
+                school,
+                grade,
+                parent_phone,
+                "Ha" if by_admin else "Yo'q",
+                created_at,
+            ]
         )
 
     buf = io.BytesIO()

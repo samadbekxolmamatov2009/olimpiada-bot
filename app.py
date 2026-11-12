@@ -52,6 +52,7 @@ class RegisterPayload(BaseModel):
     school: str
     grade: int
     parent_phone: str
+    birth_date: str
 
 
 @app.get("/api/status")
@@ -84,8 +85,20 @@ async def api_register(payload: RegisterPayload):
     school = payload.school.strip()
     parent_phone = payload.parent_phone.strip()
     phone_digits = "".join(ch for ch in parent_phone if ch.isdigit())
+    birth_date = payload.birth_date.strip()
 
-    if len(full_name) < 3 or not district or not school or len(phone_digits) < 9:
+    try:
+        birth_date_valid = datetime.strptime(birth_date, "%Y-%m-%d") <= datetime.now()
+    except ValueError:
+        birth_date_valid = False
+
+    if (
+        len(full_name) < 3
+        or not district
+        or not school
+        or len(phone_digits) < 9
+        or not birth_date_valid
+    ):
         return JSONResponse({"error": "invalid_fields"}, status_code=400)
     if str(payload.grade) not in ALLOWED_GRADES:
         return JSONResponse({"error": "invalid_grade"}, status_code=400)
@@ -102,6 +115,7 @@ async def api_register(payload: RegisterPayload):
         school=school,
         grade=payload.grade,
         parent_phone=parent_phone,
+        birth_date=birth_date,
         telegram_id=None if is_admin else telegram_id,
         registered_by_admin=is_admin,
         admin_id=telegram_id if is_admin else None,

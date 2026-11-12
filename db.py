@@ -60,6 +60,15 @@ async def init_db() -> None:
         ON registrations(telegram_id) WHERE telegram_id IS NOT NULL
         """
     )
+    await _ensure_birth_date_column(client)
+
+
+async def _ensure_birth_date_column(client: libsql_client.Client) -> None:
+    """Eski bazalarda 'birth_date' ustuni yo'q bo'lsa, uni qo'shadi."""
+    rs = await client.execute("PRAGMA table_info(registrations)")
+    columns = {row[1] for row in rs.rows}
+    if "birth_date" not in columns:
+        await client.execute("ALTER TABLE registrations ADD COLUMN birth_date TEXT")
 
 
 async def is_registered(telegram_id: int) -> bool:
@@ -76,6 +85,7 @@ async def add_registration(
     school: str,
     grade: int,
     parent_phone: str,
+    birth_date: str,
     telegram_id: Optional[int] = None,
     registered_by_admin: bool = False,
     admin_id: Optional[int] = None,
@@ -85,8 +95,8 @@ async def add_registration(
         """
         INSERT INTO registrations
             (telegram_id, full_name, district, school, grade, parent_phone,
-             registered_by_admin, admin_id, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+             birth_date, registered_by_admin, admin_id, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         [
             telegram_id,
@@ -95,6 +105,7 @@ async def add_registration(
             school,
             grade,
             parent_phone,
+            birth_date,
             1 if registered_by_admin else 0,
             admin_id,
             datetime.now().isoformat(timespec="seconds"),
@@ -106,7 +117,7 @@ async def get_all_registrations() -> list[tuple]:
     client = get_client()
     rs = await client.execute(
         """
-        SELECT full_name, district, school, grade, parent_phone,
+        SELECT full_name, birth_date, district, school, grade, parent_phone,
                registered_by_admin, created_at
         FROM registrations ORDER BY id
         """
