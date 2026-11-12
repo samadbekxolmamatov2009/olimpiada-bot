@@ -19,9 +19,12 @@ try:
 except ValueError:
     CHANNEL_ID = _channel_id_raw or None
 
-# Obuna bo'lish tugmasi uchun havola. Agar CHANNEL_ID "@username" bo'lsa va
-# CHANNEL_URL berilmagan bo'lsa, havola shundan avtomatik hosil qilinadi.
+# Obuna bo'lish tugmasi uchun havola. "@username" yoki oddiy "username" tarzida
+# yozilgan bo'lsa ham, to'g'ri https://t.me/... havolasiga avtomatik aylantiriladi.
+# Berilmagan bo'lsa, CHANNEL_ID "@username" bo'lsa shundan hosil qilinadi.
 CHANNEL_URL = os.getenv("CHANNEL_URL", "").strip()
+if CHANNEL_URL and not CHANNEL_URL.startswith("http"):
+    CHANNEL_URL = f"https://t.me/{CHANNEL_URL.lstrip('@')}"
 if not CHANNEL_URL and isinstance(CHANNEL_ID, str) and CHANNEL_ID.startswith("@"):
     CHANNEL_URL = f"https://t.me/{CHANNEL_ID[1:]}"
 
