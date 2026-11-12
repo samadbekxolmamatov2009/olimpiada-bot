@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Navoiy–Qorako'l olimpiadasi</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="head">
+      <div class="badge">🏆 OLIMPIADA</div>
+      <h1>Navoiy–Qorako'l<br>olimpiadasi</h1>
+      <p class="sub">3- va 4-sinf o'quvchilari uchun ro'yxatdan o'tish</p>
+    </header>
+
+    <div id="loading" class="card state">
+      <div class="spinner"></div>
+      <p>Yuklanmoqda...</p>
+    </div>
+
+    <div id="closed" class="card state hidden">
+      <div class="icon">⛔️</div>
+      <h2>Ro'yxatdan o'tish yopilgan</h2>
+      <p>Ro'yxatdan o'tish muddati 2026-yil 20-noyabrda tugagan.</p>
+    </div>
+
+    <div id="registered" class="card state hidden">
+      <div class="icon">✅</div>
+      <h2>Siz ro'yxatdan o'tgansiz</h2>
+      <p>Navoiy–Qorako'l olimpiadasi bo'yicha ma'lumotlaringiz allaqachon qabul qilingan.</p>
+    </div>
+
+    <div id="success" class="card state hidden">
+      <div class="icon">🎉</div>
+      <h2>Muvaffaqiyatli yuborildi!</h2>
+      <p id="successText">Ma'lumotlar qabul qilindi.</p>
+      <button id="closeBtn" type="button" class="btn btn-primary">Yopish</button>
+    </div>
+
+    <form id="form" class="card state hidden">
+      <div id="adminNote" class="admin-note hidden">✍️ Admin rejimi — ota-ona o'rniga ro'yxatdan o'tkazasiz</div>
+
+      <label class="field">
+        <span>Ism va familya</span>
+        <input type="text" id="fullName" placeholder="Masalan: Aziz Karimov" autocomplete="off">
+      </label>
+
+      <label class="field">
+        <span>Tumani</span>
+        <input type="text" id="district" placeholder="Masalan: Qorako'l" autocomplete="off">
+      </label>
+
+      <label class="field">
+        <span>O'qiyotgan maktabi</span>
+        <input type="text" id="school" placeholder="Masalan: 25-maktab" autocomplete="off">
+      </label>
+
+      <div class="field">
+        <span>Sinfi</span>
+        <div class="grade-toggle">
+          <button type="button" class="grade-btn" data-grade="3">3-sinf</button>
+          <button type="button" class="grade-btn" data-grade="4">4-sinf</button>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>Ota-onasining telefon raqami</span>
+        <input type="tel" id="parentPhone" placeholder="+998 90 123 45 67" autocomplete="off">
+      </label>
+
+      <p id="formError" class="error hidden"></p>
+
+      <button type="submit" id="submitBtn" class="btn btn-primary" disabled>✅ Ro'yxatdan o'tish</button>
+    </form>
+
+    <footer class="foot">SertifikatPro.com · Navoiy–Qorako'l olimpiadasi</footer>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>

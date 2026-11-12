@@ -1,4 +1,14 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
+
+from config import WEBAPP_URL
+
+
+def registration_kb() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="📝 Ro'yxatdan o'tish", web_app=WebAppInfo(url=WEBAPP_URL))]
+        ]
+    )
 
 
 def admin_menu_kb() -> InlineKeyboardMarkup:
@@ -8,14 +18,8 @@ def admin_menu_kb() -> InlineKeyboardMarkup:
             [
                 InlineKeyboardButton(
                     text="✍️ Ota-ona o'rniga ro'yxatdan o'tkazish",
-                    callback_data="admin_register_for_parent",
+                    web_app=WebAppInfo(url=WEBAPP_URL),
                 )
             ],
         ]
-    )
-
-
-def cancel_kb() -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(
-        inline_keyboard=[[InlineKeyboardButton(text="❌ Bekor qilish", callback_data="cancel")]]
     )
