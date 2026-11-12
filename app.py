@@ -8,7 +8,7 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Update
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -38,6 +38,11 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.mount("/webapp", StaticFiles(directory="webapp", html=True), name="webapp")
+
+
+@app.api_route("/", methods=["GET", "HEAD"])
+async def root():
+    return RedirectResponse(url="/webapp/")
 
 
 class RegisterPayload(BaseModel):
