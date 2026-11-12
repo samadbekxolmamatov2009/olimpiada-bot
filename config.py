@@ -12,6 +12,19 @@ ADMIN_IDS = {int(x) for x in os.getenv("ADMIN_IDS", "").split(",") if x.strip()}
 TURSO_DATABASE_URL = os.getenv("TURSO_DATABASE_URL", "")
 TURSO_AUTH_TOKEN = os.getenv("TURSO_AUTH_TOKEN", "")
 
+# Majburiy obuna kanali. "-100..." raqamli ID yoki "@kanal_username" bo'lishi mumkin.
+_channel_id_raw = os.getenv("CHANNEL_ID", "").strip()
+try:
+    CHANNEL_ID: object = int(_channel_id_raw)
+except ValueError:
+    CHANNEL_ID = _channel_id_raw or None
+
+# Obuna bo'lish tugmasi uchun havola. Agar CHANNEL_ID "@username" bo'lsa va
+# CHANNEL_URL berilmagan bo'lsa, havola shundan avtomatik hosil qilinadi.
+CHANNEL_URL = os.getenv("CHANNEL_URL", "").strip()
+if not CHANNEL_URL and isinstance(CHANNEL_ID, str) and CHANNEL_ID.startswith("@"):
+    CHANNEL_URL = f"https://t.me/{CHANNEL_ID[1:]}"
+
 # Render web-service uchun bu avtomatik to'ldiriladi; boshqa hostlarda
 # PUBLIC_URL orqali o'zingiz ko'rsatishingiz mumkin.
 PUBLIC_URL = (os.getenv("PUBLIC_URL") or os.getenv("RENDER_EXTERNAL_URL", "")).rstrip("/")

@@ -6,19 +6,24 @@ Ro'yxatdan o'tish **Telegram Mini App** (Web App) ichida, zamonaviy forma ko'rin
 ## Qanday ishlaydi
 
 1. Foydalanuvchi botga `/start` yuboradi.
-2. Bot "📝 Ro'yxatdan o'tish" tugmasini yuboradi — bosilganda Telegram ichida Mini App ochiladi.
-3. Mini App formasida: **Ism familya → Tumani → Maktabi → Sinfi (3/4) → Ota-ona tel raqami**
-   to'ldiriladi va "Ro'yxatdan o'tish" bosiladi.
-4. Mini App Telegramning `initData`sini backendga yuboradi, backend uni (bot token bilan HMAC
+2. Agar `CHANNEL_ID` sozlangan bo'lsa — bot avval shu kanalga obuna ekanini tekshiradi.
+   Obuna bo'lmasa, "📢 Kanalga o'tish" va "✅ Men obuna bo'ldim" tugmalari ko'rsatiladi;
+   obuna bo'lib, tugmani bosgandan keyingina davom etadi.
+3. Bot "📝 Ro'yxatdan o'tish" tugmasini yuboradi — bosilganda Telegram ichida Mini App ochiladi.
+4. Mini App formasida: **Ism familya → Tumani → Maktabi → Sinfi (3/4) → Ota-ona tel raqami**
+   to'ldiriladi va "Ro'yxatdan o'tish" bosiladi. Telefon maydoniga `+998 ` avtomatik yozilgan
+   holda ochiladi — foydalanuvchi faqat qolgan raqamlarni kiritadi.
+5. Mini App Telegramning `initData`sini backendga yuboradi, backend uni (bot token bilan HMAC
    orqali) tasdiqlab, haqiqiy Telegram foydalanuvchisi ekanini tekshiradi — soxta so'rovlar
    qabul qilinmaydi.
-5. Sinfi 3 yoki 4 bo'lmasa — forma umuman shu ikki variantdan boshqasini taklif qilmaydi, shunga
+6. Sinfi 3 yoki 4 bo'lmasa — forma umuman shu ikki variantdan boshqasini taklif qilmaydi, shunga
    qaramay backend ham qayta tekshiradi.
-6. Bir marta ro'yxatdan o'tgan foydalanuvchi qayta botga kirsa, forma o'rniga
+7. Bir marta ro'yxatdan o'tgan foydalanuvchi qayta botga kirsa, forma o'rniga
    "✅ Siz allaqachon ro'yxatdan o'tgansiz" oynasi ko'rsatiladi.
-7. Ro'yxatdan o'tish bot ishga tushgan kundan **2026-yil 20-noyabrgacha** ochiq; muddat
+8. Ro'yxatdan o'tish bot ishga tushgan kundan **2026-yil 20-noyabrgacha** ochiq; muddat
    tugagach forma yopiq ekani ko'rsatiladi.
-8. Admin (`ADMIN_IDS`dagi foydalanuvchilar) uchun `/start` boshqacha menyu ochadi:
+9. Admin (`ADMIN_IDS`dagi foydalanuvchilar) uchun `/start` boshqacha menyu ochadi (obuna
+   tekshiruvisiz):
    - 📥 **Ro'yxatni yuklab olish** — barcha ro'yxatdan o'tganlar **Excel (.xlsx)** qilib yuboriladi.
    - ✍️ **Ota-ona o'rniga ro'yxatdan o'tkazish** — xuddi shu Mini App ochiladi, lekin admin
      rejimida: cheklovsiz, ketma-ket bir nechta o'quvchini qo'lda kiritish mumkin.
@@ -44,6 +49,11 @@ Ma'lumotlar **Turso (libSQL)** bazasida saqlanadi.
 | `TURSO_AUTH_TOKEN` | Turso auth token |
 | `PUBLIC_URL` | Ixtiyoriy. Render'da avtomatik (`RENDER_EXTERNAL_URL`) olinadi, boshqa hostda qo'lda yoziladi |
 | `WEBHOOK_SECRET` | Ixtiyoriy. O'zingiz tanlagan maxfiy so'z — webhook manzilini taxmin qilib bo'lmasligi uchun |
+| `CHANNEL_ID` | Ixtiyoriy. Majburiy obuna kanali (`-100...` ID yoki `@username`). Bo'sh bo'lsa, obuna tekshiruvi o'chirilgan bo'ladi |
+| `CHANNEL_URL` | Ixtiyoriy. "Kanalga o'tish" tugmasi havolasi (yopiq/raqamli kanal uchun kerak) |
+
+**Muhim:** `CHANNEL_ID` ishlashi uchun botni shu kanalga **admin** qilib qo'shing — aks holda
+bot obuna holatini tekshira olmaydi.
 
 Turso bazasini yaratish:
 
