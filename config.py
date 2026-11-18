@@ -35,5 +35,5 @@ WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET") or secrets.token_urlsafe(24)
 WEBHOOK_PATH = f"/webhook/{WEBHOOK_SECRET}"
 WEBAPP_URL = f"{PUBLIC_URL}/webapp/"
 
-REGISTRATION_DEADLINE = datetime(2026, 11, 20, 23, 59, 59)
+REGISTRATION_DEADLINE = datetime(2026, 11, 26, 23, 59, 59)
 ALLOWED_GRADES = ("3", "4")

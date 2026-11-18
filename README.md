@@ -20,7 +20,7 @@ Ro'yxatdan o'tish **Telegram Mini App** (Web App) ichida, zamonaviy forma ko'rin
    qaramay backend ham qayta tekshiradi.
 7. Bir marta ro'yxatdan o'tgan foydalanuvchi qayta botga kirsa, forma o'rniga
    "✅ Siz allaqachon ro'yxatdan o'tgansiz" oynasi ko'rsatiladi.
-8. Ro'yxatdan o'tish bot ishga tushgan kundan **2026-yil 20-noyabrgacha** ochiq; muddat
+8. Ro'yxatdan o'tish bot ishga tushgan kundan **2026-yil 26-noyabr soat 23:59gacha** ochiq; muddat
    tugagach forma yopiq ekani ko'rsatiladi.
 9. Admin (`ADMIN_IDS`dagi foydalanuvchilar) uchun `/start` boshqacha menyu ochadi (obuna
    tekshiruvisiz):
